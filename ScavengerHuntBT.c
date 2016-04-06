@@ -67,6 +67,43 @@ int wheight(struct node* root)
     return k;
 }
 
+int addheights(struct node* root)
+{
+    int total = 0;
+    if(root == NULL)
+        return 0;
+    total += root->height;
+    total += addheights(root->left);
+    total += addheights(root->right);
+    return total;
+}
+
+int numofs(struct node* root)
+{
+    int k = 0, j = 0;
+    int total = 0;
+    if(root == NULL)
+        return 0;
+    if(root->string[0] == 's')
+        total++;
+    total += numofs(root->left);
+    total += numofs(root->right);
+
+    return total;
+}
+
+
+int totalnum(struct node* root, char string[MAX_LENGTH+1] )
+{
+    int k = 0;
+    if(root == NULL)
+        return 0;
+    if(strcmp(root->string, string) == 0)
+        k+= 1;
+    k += totalnum(root->left, string) + totalnum(root->right, string);
+    return k;
+}
+
 
 int main(void)
 {
@@ -81,7 +118,11 @@ int main(void)
     }
     int compfind = height(root, "science");//find(root, "computer", k+1);
     int hlength = wheight(root);
-    printf("%d", hlength);
+    int musicnum = totalnum(root, "music");
+    int sstart = numofs(root);
+    int addheight = addheights(root);
+    printf("%d", addheight);
+
 
     return 0;
 }
