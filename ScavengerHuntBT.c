@@ -7,29 +7,33 @@
 struct node {
     char string[MAX_LENGTH+1];
     int height;
+    int ifseen;
     struct node* left;
     struct node* right;
 };
 
 
-struct node* createNode(char string[MAX_LENGTH+1], int k)
+struct node* createNode(char string[MAX_LENGTH+1], int k, int s)
 {
     struct node* temp = malloc(sizeof(struct node));
     strcpy(temp->string, string);
     temp->height = k;
+    temp->ifseen = s;
     temp->left = NULL;
     temp->right = NULL;
     return temp;
 }
 
-struct node* insert(struct node* root, char string[MAX_LENGTH+1], int k)
+struct node* insert(struct node* root, char string[MAX_LENGTH+1], int k, int s)
 {
     if(root == NULL)
-        root = createNode(string,k);
-    else if(strcmp(root->string, string) >= 0)
-        root->left = insert(root->left, string, k+1);
+        root = createNode(string,k, s);
+    else if(strcmp(root->string, string) > 0)
+        root->left = insert(root->left, string, k+1, s);
+    else if(strcmp(root->string, string) == 0)
+        root->left = insert(root->left, string, k+1, s+1);
     else if(strcmp(root->string, string) < 0)
-        root->right = insert(root->right, string, k+1);
+        root->right = insert(root->right, string, k+1, s);
     return root;
 }
 
@@ -57,6 +61,8 @@ int wheight(struct node* root)
     int k, j;
     if(root == NULL)
         return 0;
+    if(root->ifseen == 1)
+        printf("%s\n", root->string);
     if(root->left == NULL && root->right == NULL)
         return root->height;
 
@@ -114,7 +120,7 @@ int main(void)
     for(currentcase = 0;currentcase < insertnum; currentcase++)
     {
         scanf("%s", string);
-        root = insert(root, string, k);
+        root = insert(root, string, k, 0);
     }
     int compfind = height(root, "science");//find(root, "computer", k+1);
     int hlength = wheight(root);
