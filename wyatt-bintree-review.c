@@ -19,6 +19,7 @@ struct treeNode *insertWord(struct treeNode *root, char string[STRING_MAX+1]);
 struct treeNode *findWord(struct treeNode *root, char string[STRING_MAX+1]);
 int findNumNodes(struct treeNode *root);
 void inorder(struct treeNode* root);
+int evenHeight(struct treeNode *root);
 
 
 int main(void)
@@ -35,11 +36,9 @@ int main(void)
     {
         scanf("%s", word);
         //printf("Storing %s\n", word);
-        if (word[0] == 'S')
-            count++;
         root = insertWord(root, word);
     }
-    printf("Count: %d\n", count);
+    //printf("Count: %d\n", count);
     // Prints the Height of the entire tree
     printf("Height: %d\n", root->height);
 
@@ -48,9 +47,11 @@ int main(void)
     struct treeNode *wordsy = findWord(root, wordToFind);
     printf("Found %s\n The height is: %d\n", wordsy->string, wordsy->height);
 
-    wordsy = findWord(root, "computer");
+    wordsy = findWord(root, "science");
     printf("\nNum Nodes in Computer: %d\n", findNumNodes(wordsy)+1);
     inorder(wordsy);
+    
+    printf("Num Even Nodes: %d\n", evenHeight(root));
     return 0;
 }
 
@@ -78,8 +79,6 @@ struct treeNode *insertWord(struct treeNode *root, char string[STRING_MAX+1])
 
     if (strcmp(root->string, string) <= 0)
     {
-        if (strcmp(root->string, string) == 0)
-            printf("%s\n", string);
         root->left = insertWord(root->left, string);
 
         if (root->left->height == root->height)
@@ -140,5 +139,15 @@ void inorder(struct treeNode* root) {
 
 int evenHeight(struct treeNode *root)
 {
-
+	if (root == NULL)
+		return 0;
+	int total = evenHeight(root->left) + evenHeight(root->right);
+	
+	if (root->left != NULL)
+		if (root->left->height % 2 == 0)
+			total++;
+	if (root->right != NULL)
+		if (root->right->height % 2 == 0)
+			total++;
+	return total;
 }
