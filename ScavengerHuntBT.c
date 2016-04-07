@@ -42,14 +42,23 @@ int find(struct node* root, char string[MAX_LENGTH+1], int k)
 
 int height(struct node* root, char string[MAX_LENGTH+1])
 {
+    if(root == NULL)
+        return 0;
     int k;
     if(strcmp(root->string, string) == 0)
-        return root->height;
+        k = psheight(root);
     else if(strcmp(root->string, string) > 0)
         k = height(root->left, string);
     else if(strcmp(root->string, string) < 0)
         k = height(root->right, string);
     return k;
+}
+
+int psheight(struct node* root)
+{
+    if(root == NULL)
+        return 0;
+    return psheight(root->left) + psheight(root->right) + 1;
 }
 
 int wheight(struct node* root)
@@ -79,7 +88,7 @@ int main(void)
         scanf("%s", string);
         root = insert(root, string, k);
     }
-    int compfind = height(root, "science");//find(root, "computer", k+1);
+    //int compfind = height(root, "science");//find(root, "computer", k+1);
     int hlength = wheight(root);
     printf("%d", hlength);
 
