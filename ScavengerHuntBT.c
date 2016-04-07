@@ -30,11 +30,11 @@ struct node *insertWord(struct node *root, char string[MAX_LENGTH+1])
         temp->left = NULL;
         temp->right = NULL;
         strcpy(temp->string, string);
-        temp->height = 1;
+        temp->height = 0;
         return temp;
     }
 
-    if (strcmp(root->string, string) <= 0)
+    if (strcmp(root->string, string) >= 0)
     {
         root->left = insertWord(root->left, string);
 
@@ -120,7 +120,6 @@ int wheight(struct node* root)
 
 int subheight(struct node* root)
 {
-    int k, j;
     if(root == NULL)
         return 0;
     return root->height + subheight(root->left) + subheight(root->right);
