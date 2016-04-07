@@ -21,6 +21,7 @@ int findNumNodes(struct treeNode *root);
 void inorder(struct treeNode* root);
 int evenHeight(struct treeNode *root);
 int sumOfHeights(struct treeNode *root);
+int problemFour(struct treeNode *root);
 
 // Returns the height of the tree with root root.
 int height(struct treeNode* root) {
@@ -68,6 +69,7 @@ int main(void)
     printf("Num Even Nodes: %d\n", evenHeight(root));
     printf("Arup Height: %d\n", height(root));
     printf("Sum of Heights: %d\n", sumOfHeights(root)+root->height);
+    printf("Problem 4: %d\n", problemFour(root) + findNumNodes(root)+1);
     return 0;
 }
 
@@ -178,5 +180,19 @@ int sumOfHeights(struct treeNode *root)
 	if (root->right != NULL)
 		sum += root->right->height;
 	return sum;
+}
+
+int problemFour(struct treeNode *root)
+{
+	if (root == NULL) return 0;
+	
+	int total = problemFour(root->left) + problemFour(root->right);
+	
+	if (root->left != NULL)
+		total += (findNumNodes(root->left)+1);
+	if (root->right != NULL)
+		total += (findNumNodes(root->right));
+	
+	return total;
 	
 }
