@@ -18,14 +18,8 @@ struct treeNode *createNode(void);
 struct treeNode *insertWord(struct treeNode *root, char string[STRING_MAX+1]);
 struct treeNode *findWord(struct treeNode *root, char string[STRING_MAX+1]);
 int findNumNodes(struct treeNode *root);
+void inorder(struct treeNode* root);
 
-void inorder(struct treeNode* root) {
-    if (root != NULL) {
-        inorder(root->left);
-        printf("%s h:%d\n", root->string, root->height);
-        inorder(root->right);
-    }
-}
 
 int main(void)
 {
@@ -71,7 +65,7 @@ struct treeNode *createNode(void)
     return temp;
 }
 
-// Inserts
+// Inserts a word into the Binary Tree.
 struct treeNode *insertWord(struct treeNode *root, char string[STRING_MAX+1])
 {
     if (root == NULL)
@@ -102,6 +96,7 @@ struct treeNode *insertWord(struct treeNode *root, char string[STRING_MAX+1])
     return root;
 }
 
+// Finds a word in the tree and returns a pointer to the node.
 struct treeNode *findWord(struct treeNode *root, char string[STRING_MAX+1])
 {
     if (root == NULL)
@@ -116,6 +111,7 @@ struct treeNode *findWord(struct treeNode *root, char string[STRING_MAX+1])
 
 }
 
+//Finds the total number of nodes in a subtree (not including the root node).
 int findNumNodes(struct treeNode *root)
 {
     if (root == NULL)
@@ -131,4 +127,18 @@ int findNumNodes(struct treeNode *root)
         total += 2;
 
     return total;
+}
+
+// Prints out in ord
+void inorder(struct treeNode* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%s h:%d\n", root->string, root->height);
+        inorder(root->right);
+    }
+}
+
+int evenHeight(struct treeNode *root)
+{
+
 }
