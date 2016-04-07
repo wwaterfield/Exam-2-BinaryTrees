@@ -21,6 +21,23 @@ int findNumNodes(struct treeNode *root);
 void inorder(struct treeNode* root);
 int evenHeight(struct treeNode *root);
 
+// Returns the height of the tree with root root.
+int height(struct treeNode* root) {
+
+    // Height of an empty tree.
+    if (root == NULL) return -1;
+
+    // Find out heights of both sides.
+    int leftSide = height(root->left);
+    int rightSide = height(root->right);
+
+    // Choose the bigger one and add one.
+    if (leftSide > rightSide)
+        return leftSide+1;
+    else
+        return rightSide+1;
+
+}
 
 int main(void)
 {
@@ -52,6 +69,7 @@ int main(void)
     inorder(wordsy);
     
     printf("Num Even Nodes: %d\n", evenHeight(root));
+    printf("Arup Height: %d\n", height(root));
     return 0;
 }
 
