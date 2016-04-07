@@ -169,3 +169,15 @@ int evenHeight(struct treeNode *root)
 			total++;
 	return total;
 }
+
+int sumOfHeights(struct treeNode *root)
+{
+	int sum = sumOfHeights(root->left) + sumOfHeights(root->right);
+	
+	if (root->left != NULL)
+		sum += root->left->height;
+	if (root->right != NULL)
+		sum += root->right->height;
+	
+	
+}
