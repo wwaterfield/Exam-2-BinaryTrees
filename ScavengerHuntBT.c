@@ -11,6 +11,14 @@ struct node {
     struct node* right;
 };
 
+int evenHeight(struct node *root)
+{
+    if(root == NULL)
+        return 0;
+    int x = aheight(root, 0);
+	return x + evenHeight(root->left) + evenHeight(root->right);
+}
+
 
 struct node* createNode(char string[MAX_LENGTH+1], int k)
 {
@@ -66,17 +74,12 @@ struct node* insert(struct node* root, char string[MAX_LENGTH+1], int k)
 int aheight(struct node* root) {
 
     // Height of an empty tree.
-    if (root == NULL) return -1;
-
+    if (root == NULL) return 0;
     // Find out heights of both sides.
     int leftSide = aheight(root->left);
     int rightSide = aheight(root->right);
 
-    // Choose the bigger one and add one.`
-    if (leftSide > rightSide)
-        return leftSide+1;
-    else
-        return rightSide+1;
+    return leftSide+rightSide+1;
 
 }
 
@@ -141,7 +144,8 @@ int main(void)
     //int compfind = height(root, "science");//find(root, "computer", k+1);
     //int hlength = aheight(root);
     int glength = subheight(root);
-    printf("%d", glength);
+    int even = evenHeight(root);
+    printf("%d", even);
 
     return 0;
 }
