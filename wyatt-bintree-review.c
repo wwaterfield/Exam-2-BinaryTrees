@@ -20,6 +20,7 @@ struct treeNode *findWord(struct treeNode *root, char string[STRING_MAX+1]);
 int findNumNodes(struct treeNode *root);
 void inorder(struct treeNode* root);
 int evenHeight(struct treeNode *root);
+int sumOfHeights(struct treeNode *root);
 
 // Returns the height of the tree with root root.
 int height(struct treeNode* root) {
@@ -59,17 +60,14 @@ int main(void)
     // Prints the Height of the entire tree
     printf("Height: %d\n", root->height);
 
-    char wordToFind[] = "apple";
+  
 
-    struct treeNode *wordsy = findWord(root, wordToFind);
-    printf("Found %s\n The height is: %d\n", wordsy->string, wordsy->height);
-
-    wordsy = findWord(root, "science");
-    printf("\nNum Nodes in Computer: %d\n", findNumNodes(wordsy)+1);
-    inorder(wordsy);
+    struct treeNode *wordsy;
+    inorder(root);
     
     printf("Num Even Nodes: %d\n", evenHeight(root));
     printf("Arup Height: %d\n", height(root));
+    printf("Sum of Heights: %d\n", sumOfHeights(root)+root->height);
     return 0;
 }
 
@@ -95,7 +93,7 @@ struct treeNode *insertWord(struct treeNode *root, char string[STRING_MAX+1])
         return temp;
     }
 
-    if (strcmp(root->string, string) <= 0)
+    if ((int)strcmp(string, root->string) <= 0)
     {
         root->left = insertWord(root->left, string);
 
@@ -119,11 +117,11 @@ struct treeNode *findWord(struct treeNode *root, char string[STRING_MAX+1])
     if (root == NULL)
         return NULL;
 
-    if (strcmp(root->string, string) < 0)
-        return findWord(root->left, string);
-    else if (strcmp(root->string, string) > 0)
-        return findWord(root->right, string);
-    else if (strcmp(root->string, string) == 0)
+    if (strcmp(string, root->string) < 0)
+        findWord(root->left, string);
+    else if (strcmp(string, root->string) > 0)
+        findWord(root->right, string);
+    else if (strcmp(string, root->string) == 0)
         return root;
 
 }
@@ -172,12 +170,13 @@ int evenHeight(struct treeNode *root)
 
 int sumOfHeights(struct treeNode *root)
 {
+	if (root == NULL) return 0;
 	int sum = sumOfHeights(root->left) + sumOfHeights(root->right);
 	
 	if (root->left != NULL)
 		sum += root->left->height;
 	if (root->right != NULL)
 		sum += root->right->height;
-	
+	return sum;
 	
 }
